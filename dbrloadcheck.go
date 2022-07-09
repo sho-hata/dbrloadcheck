@@ -37,8 +37,15 @@ func run(pass *analysis.Pass) (any, error) {
 			if n.Name.Name != targetPackage {
 				return
 			}
+			for _, decl := range n.Decls {
+				if fnDecl, ok := decl.(*ast.FuncDecl); ok {
+					analyze(pass, fnDecl)
+				}
+			}
 		}
 	})
 
 	return nil, nil
 }
+
+func analyze(pass *analysis.Pass, fnDecl *ast.FuncDecl) {}
